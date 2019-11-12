@@ -1,0 +1,9 @@
+{
+  "name": "ark-items-scraper",
+  "version": "1.0.0",
+  "description": "Scrape ark item information from the ark wiki.",
+  "main": "app.js",
+  "author": "alex.p.furrow@gmail.com",
+  "license": "MIT",
+  "private": true
+}
