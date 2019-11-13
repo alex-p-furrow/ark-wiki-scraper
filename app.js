@@ -4,7 +4,7 @@ const download = require("image-downloader");
 const categoryMaps = require("./categoryMaps.json");
 
 async function GetCategories() {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: false, userDataDir: "./cache" });
     const page = await browser.newPage();
     await page.goto("https://ark.gamepedia.com/Item_IDs");
 
