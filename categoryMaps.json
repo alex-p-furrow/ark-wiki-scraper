@@ -1,0 +1,66 @@
+[
+    {
+        "dataPage": "Item IDs/Resources",
+        "name": "Resources"
+    },
+    {
+        "dataPage": "Item IDs/Tools",
+        "name": "Tools"
+    },
+    {
+        "dataPage": "Item IDs/Armor",
+        "name": "Armor"
+    },
+    {
+        "dataPage": "Item IDs/Saddles",
+        "name": "Saddles"
+    },
+    {
+        "dataPage": "Item IDs/Structures",
+        "name": "Structures"
+    },
+    {
+        "dataPage": "Item IDs/Dye",
+        "name": "Dye"
+    },
+    {
+        "dataPage": "Item IDs/Consumables",
+        "name": "Consumables"
+    },
+    {
+        "dataPage": "Item IDs/Recipes",
+        "name": "Recipes"
+    },
+    {
+        "dataPage": "Item IDs/Eggs",
+        "name": "Eggs"
+    },
+    {
+        "dataPage": "Item IDs/Farming",
+        "name": "Farming"
+    },
+    {
+        "dataPage": "Item IDs/Seeds",
+        "name": "Seeds"
+    },
+    {
+        "dataPage": "Item IDs/Weapons",
+        "name": "Weapons"
+    },
+    {
+        "dataPage": "Item IDs/Ammunition",
+        "name": "Ammunition"
+    },
+    {
+        "dataPage": "Item IDs/Skins",
+        "name": "Skins"
+    },
+    {
+        "dataPage": "Item IDs/Artifacts",
+        "name": "Artifacts"
+    },
+    {
+        "dataPage": "Item IDs/Trophy",
+        "name": "Trophies"
+    }
+]
