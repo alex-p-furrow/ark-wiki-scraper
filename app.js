@@ -25,23 +25,18 @@ async function GetCategories() {
                 // check the class name and blueprint cells
                 // if there is no class name or blueprint data ignore it
                 if (r.children[4].children.length > 0 && r.children[5].children.length > 0) {
-                    let img = r.children[0].querySelector("a.image").getAttribute("href");
-                    let stackSize = Number.parseInt(r.children[2].innerText);
                     let id = Number.parseInt(r.children[3].innerText);
-                    let className = r.children[4].querySelector("span").innerText;
-                    let blueprintPath = r.children[5].querySelector("span").innerText;
 
-                    let item = {
-                        image: img,
-                        stackSize: stackSize,
+                    items.push({
+                        image: r.children[0].querySelector("a.image").getAttribute("href"),
+                        stackSize: Number.parseInt(r.children[2].innerText),
                         id: Number.isNaN(id) ? null : id,
-                        className: className,
-                        blueprintPath: blueprintPath
-                    };
-
-                    items.push(item);
+                        className: r.children[4].querySelector("span").innerText,
+                        blueprintPath: r.children[5].querySelector("span").innerText
+                    });
                 }
             }
+
             return items;
         }, categoryMaps[i].dataPage);
 
