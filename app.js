@@ -1,11 +1,14 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
+const download = require("image-downloader");
 const categoryMaps = require("./categoryMaps.json");
 
 async function GetCategories() {
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.goto("https://ark.gamepedia.com/Item_IDs");
+
+    fs.mkdirSync("dist/images", { recursive: true });
 
     let categories = [];
 
@@ -40,11 +43,34 @@ async function GetCategories() {
             return items;
         }, categoryMaps[i].dataPage);
 
+        const imgPage = await browser.newPage();
+
+        for (var x = 0; x < results.length; x++) {
+            let imgSelector = decodeURI(
+                `img[alt="${results[x].image.substr(1).replace(/_/g, " ")}"]`
+            );
+            console.log(imgSelector);
+            await imgPage.goto("https://ark.gamepedia.com" + results[x].image);
+            await imgPage.waitForSelector(imgSelector);
+
+            let imgUrl = await imgPage.evaluate(imgSelector => {
+                return document.querySelector(imgSelector).getAttribute("src");
+            }, imgSelector);
+
+            download
+                .image({ url: imgUrl, dest: "dist/images" })
+                .then(({ filename, image }) => {
+                    console.log("Saved to", filename);
+                })
+                .catch(err => console.error(err));
+        }
+
+        imgPage.close();
+
         category.items = results.slice();
         categories.push(category);
     }
 
-    fs.mkdirSync("dist", { recursive: true });
     fs.writeFile("dist/items.json", JSON.stringify(categories, null, 4), error => {
         if (error) {
             console.log(error);
