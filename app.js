@@ -16,9 +16,7 @@ async function GetCategories() {
         let category = { name: categoryMaps[i].name, items: [] };
 
         await page.click(`div[data-page="${categoryMaps[i].dataPage}"] h3 span.jslink`);
-        await page.waitForSelector(
-            `div.pageloader-contentloaded[data-page="${categoryMaps[i].dataPage}"]`
-        );
+        await page.waitForSelector(`div.pageloader-contentloaded[data-page="${categoryMaps[i].dataPage}"]`);
 
         let results = await page.evaluate(dataPage => {
             let rows = document.querySelectorAll(`div[data-page="${dataPage}"] tbody tr`);
@@ -46,9 +44,7 @@ async function GetCategories() {
         const imgPage = await browser.newPage();
 
         for (var x = 0; x < results.length; x++) {
-            let imgSelector = decodeURI(
-                `img[alt="${results[x].image.substr(1).replace(/_/g, " ")}"]`
-            );
+            let imgSelector = decodeURI(`img[alt="${results[x].image.substr(1).replace(/_/g, " ")}"]`);
             console.log(imgSelector);
             await imgPage.goto("https://ark.gamepedia.com" + results[x].image);
             await imgPage.waitForSelector(imgSelector);
