@@ -9,6 +9,7 @@
     "dependencies": {
         "image-downloader": "^3.5.0",
         "prettier": "^1.19.1",
-        "puppeteer": "^2.0.0"
+        "puppeteer": "^2.0.0",
+        "yargs": "^15.0.1"
     }
 }

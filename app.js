@@ -1,10 +1,9 @@
-const puppeteer = require("puppeteer");
 const fs = require("fs");
-const download = require("image-downloader");
+const web = require("./web.js");
 const categoryMaps = require("./categoryMaps.json");
 
 async function GetCategories() {
-    const browser = await puppeteer.launch({ headless: false, userDataDir: "./cache" });
+    const browser = await web.browser();
     const page = await browser.newPage();
     await page.goto("https://ark.gamepedia.com/Item_IDs");
 
@@ -53,12 +52,7 @@ async function GetCategories() {
                 return document.querySelector(imgSelector).getAttribute("src");
             }, imgSelector);
 
-            download
-                .image({ url: imgUrl, dest: "dist/images" })
-                .then(({ filename, image }) => {
-                    console.log("Saved to", filename);
-                })
-                .catch(err => console.error(err));
+            web.getImage(imgUrl, "dist/images");
         }
 
         imgPage.close();
