@@ -5,6 +5,7 @@ const path = require("path");
 const puppeteer = require("puppeteer");
 const download = require("image-downloader");
 const png = require("png-metadata");
+const logger = require("tracer").colorConsole({ level: argv.d ? "debug" : "warn" });
 
 module.exports.baseUrl = "https://ark.gamepedia.com";
 
@@ -46,17 +47,23 @@ module.exports.getImage = async (url, destFolder) => {
 
     const filename = this.getFileName(imgUrl);
     const dest = path.join(destFolder, filename);
+    const u = new URL(imgUrl);
+    const version = u.searchParams.get("version");
+
+    if (fs.existsSync(dest)) {
+        if (getPNGMetadata(dest, "vers") === version) {
+            logger.debug(`skipping ${imgUrl} same version already exists`);
+            return dest;
+        }
+    }
 
     try {
         const result = await download.image({ url: imgUrl, dest: dest });
-        console.log(`downloaded ${url} to ${result.filename}`);
-
-        const u = new URL(imgUrl);
-        const version = u.searchParams.get("version");
+        logger.debug(`downloaded ${imgUrl} to ${result.filename}`);
 
         writePNGMetadata(dest, "vers", version);
     } catch (error) {
-        console.log(error);
+        logger.error(error);
     }
 
     return dest;
