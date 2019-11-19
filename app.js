@@ -54,7 +54,7 @@ async function getItems() {
 
                         catItems.push({
                             id: Number.isNaN(id) ? null : id,
-                            name: baseUrl + r.children[0].querySelector("a[title]").innerText,
+                            name: r.children[0].querySelector("a[title]").innerText,
                             category: category,
                             imagePage: baseUrl + r.children[0].querySelector("a.image").getAttribute("href"),
                             imagePath: null,
