@@ -59,7 +59,7 @@ module.exports.getImage = async (url, destFolder) => {
         console.log(error);
     }
 
-    return filename;
+    return dest;
 };
 
 function writePNGMetadata(fileName, key, value) {
