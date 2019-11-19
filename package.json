@@ -11,6 +11,7 @@
         "png-metadata": "^1.0.2",
         "prettier": "^1.19.1",
         "puppeteer": "^2.0.0",
+        "tracer": "^1.0.1",
         "yargs": "^15.0.1"
     }
 }

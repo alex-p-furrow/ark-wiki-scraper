@@ -2,6 +2,7 @@ const argv = require("yargs").argv;
 const fs = require("fs");
 const web = require("./web.js");
 const categoryMaps = require("./categoryMaps.json");
+const logger = require("tracer").colorConsole({ level: argv.d ? "debug" : "warn" });
 
 async function main() {
     const browser = await web.getBrowser();
@@ -9,6 +10,7 @@ async function main() {
     fs.mkdirSync("dist/images", { recursive: true });
 
     if (argv.i) {
+        logger.info("Scraping ark items...");
         const items = await getItems();
 
         for (let i = 0; i < items.length; i++) {
@@ -16,15 +18,17 @@ async function main() {
                 const fn = await web.getImage(items[i].imagePage, "dist/images");
                 items[i].imagePath = fn;
             } catch (error) {
-                console.log(error);
+                logger.error(error);
             }
         }
 
         fs.writeFile("dist/items.json", JSON.stringify(items, null, 4), error => {
             if (error) {
-                console.log(error);
+                logger.error(error);
             }
         });
+
+        logger.info(`${items.length} items scraped.`);
     }
 
     browser.close();
