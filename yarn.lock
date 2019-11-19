@@ -512,6 +512,11 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
+png-metadata@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/png-metadata/-/png-metadata-1.0.2.tgz#8feec9fbc0ddf5b5b779e3bbcc61dc6976dfa1b0"
+  integrity sha512-9evMsSVWxOlMmL/LtFo1LPxixyNg6KmFYIUZ/zdh4GF0kcc9cy7kRmXpCwrLMeh1+kaxFGmbk3WCHKEezSu2Bw==
+
 prettier@^1.19.1:
   version "1.19.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"

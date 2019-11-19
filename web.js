@@ -1,6 +1,10 @@
 const argv = require("yargs").argv;
+const nodeUrl = require("url");
+const fs = require("fs");
+const path = require("path");
 const puppeteer = require("puppeteer");
 const download = require("image-downloader");
+const png = require("png-metadata");
 
 module.exports.baseUrl = "https://ark.gamepedia.com";
 
@@ -25,7 +29,7 @@ async function getImgPage() {
     return imgPageInstance;
 }
 
-module.exports.getImage = async (url, dest) => {
+module.exports.getImage = async (url, destFolder) => {
     const imgSelector = decodeURI(
         `img[alt="${url
             .replace(module.exports.baseUrl, "")
@@ -40,7 +44,54 @@ module.exports.getImage = async (url, dest) => {
         return document.querySelector(imgSelector).getAttribute("src");
     }, imgSelector);
 
-    const result = await download.image({ url: imgUrl, dest: dest });
-    console.log(`downloaded ${url} to ${result.filename}`);
-    return result.filename;
+    const filename = this.getFileName(imgUrl);
+    const dest = path.join(destFolder, filename);
+
+    try {
+        const result = await download.image({ url: imgUrl, dest: dest });
+        console.log(`downloaded ${url} to ${result.filename}`);
+
+        const u = new URL(imgUrl);
+        const version = u.searchParams.get("version");
+
+        writePNGMetadata(dest, "vers", version);
+    } catch (error) {
+        console.log(error);
+    }
+
+    return filename;
+};
+
+function writePNGMetadata(fileName, key, value) {
+    let buffer = png.readFileSync(fileName);
+    let chunkList = png.splitChunk(buffer);
+    // append
+    const iend = chunkList.pop(); // remove IEND
+    const newchunk = png.createChunk(key, value);
+    chunkList.push(newchunk);
+    chunkList.push(iend);
+    // join
+    var newpng = png.joinChunk(chunkList);
+    fs.writeFileSync(fileName, newpng, "binary");
+}
+
+function getPNGMetadata(fileName, key) {
+    let buffer = png.readFileSync(fileName);
+    let chunkList = png.splitChunk(buffer);
+    let result = null;
+
+    for (const chunk of chunkList) {
+        if (chunk.type === key) {
+            result = chunk.data;
+        }
+    }
+
+    return result;
+}
+
+module.exports.getFileName = url => {
+    const pathname = nodeUrl.parse(url).pathname;
+    const basename = path.basename(pathname);
+    const decodedBasename = decodeURIComponent(basename);
+    return decodedBasename;
 };
