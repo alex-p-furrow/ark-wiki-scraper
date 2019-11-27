@@ -1,0 +1,26 @@
+[
+    {
+        "tableIndex": 0,
+        "name": "Core"
+    },
+    {
+        "tableIndex": 1,
+        "name": "Scorched Earth"
+    },
+    {
+        "tableIndex": 2,
+        "name": "Ragnarok"
+    },
+    {
+        "tableIndex": 3,
+        "name": "Aberration"
+    },
+    {
+        "tableIndex": 4,
+        "name": "Extinction"
+    },
+    {
+        "tableIndex": 5,
+        "name": "Valguero"
+    }
+]
