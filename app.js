@@ -1,5 +1,6 @@
 const argv = require("yargs").argv;
 const fs = require("fs");
+const path = require("path");
 const web = require("./web.js");
 const categoryMaps = require("./categoryMaps.json");
 const logger = require("tracer").colorConsole({ level: argv.d ? "debug" : "warn" });
@@ -16,7 +17,7 @@ async function main() {
         for (let i = 0; i < items.length; i++) {
             try {
                 const fn = await web.getImage(items[i].imagePage, "dist/images");
-                items[i].imagePath = fn;
+                items[i].imageName = path.parse(fn).base;
             } catch (error) {
                 logger.error(error);
             }
@@ -61,7 +62,6 @@ async function getItems() {
                             name: r.children[0].querySelector("a[title]").innerText,
                             category: category,
                             imagePage: baseUrl + r.children[0].querySelector("a.image").getAttribute("href"),
-                            imagePath: null,
                             wikiUrl: baseUrl + r.children[0].querySelector("a[title]").getAttribute("href"),
                             stackSize: Number.parseInt(r.children[2].innerText),
                             className: r.children[4].querySelector("span").innerText,
