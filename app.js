@@ -2,7 +2,7 @@ const argv = require("yargs").argv;
 const fs = require("fs");
 const path = require("path");
 const web = require("./web.js");
-const categoryMaps = require("./categoryMaps.json");
+const itemCategoryMaps = require("./itemCategoryMaps.json");
 const logger = require("tracer").colorConsole({ level: argv.d ? "debug" : "warn" });
 
 async function main() {
@@ -42,9 +42,9 @@ async function getItems() {
 
     let items = [];
 
-    for (var i = 0; i < categoryMaps.length; i++) {
-        await page.click(`div[data-page="${categoryMaps[i].dataPage}"] h3 span.jslink`);
-        await page.waitForSelector(`div.pageloader-contentloaded[data-page="${categoryMaps[i].dataPage}"]`);
+    for (var i = 0; i < itemCategoryMaps.length; i++) {
+        await page.click(`div[data-page="${itemCategoryMaps[i].dataPage}"] h3 span.jslink`);
+        await page.waitForSelector(`div.pageloader-contentloaded[data-page="${itemCategoryMaps[i].dataPage}"]`);
 
         let results = await page.evaluate(
             (dataPage, baseUrl, category) => {
@@ -72,9 +72,9 @@ async function getItems() {
 
                 return catItems;
             },
-            categoryMaps[i].dataPage,
+            itemCategoryMaps[i].dataPage,
             web.baseUrl,
-            categoryMaps[i].name
+            itemCategoryMaps[i].name
         );
 
         items = items.concat(results);
